@@ -11,11 +11,13 @@ export default class Terminal {
   cli: ReadLine.Interface = ReadLine.createInterface({
     output: process.stdout,
     input: process.stdin,
-    prompt: "user@machine:~/$ "
+    prompt: "user@machine:~/$ ",
+    terminal: false
   })
 
   init() {
     this.cli.prompt()
+
     this.cli.on('line', async (line) => {
       const result = await this.processManger.schedule({
         cmdline: line,
@@ -24,7 +26,8 @@ export default class Terminal {
       })
       // Print the command output
       console.log(result.stdout)
-      this.init()
+
+      this.cli.prompt()
     })
   }
 

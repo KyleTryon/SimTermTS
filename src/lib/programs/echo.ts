@@ -5,7 +5,10 @@ import { ErrorCode, ErrorCodeMap } from '../types/OS/Process/ErrorNo'
 export default class ProgramEcho extends Program {
   alias = "echo"
   async execute(stream: IOStream): Promise<IOStream> {
-    const output = stream.stdin.split(" ").pop()?.toString() ?? ""
+    const outputArray = stream.stdin.split(" ")
+    outputArray.shift()
+    const output = outputArray.join(" ")
+
     return Promise.resolve({
       stdin: "",
       stdout: output,
