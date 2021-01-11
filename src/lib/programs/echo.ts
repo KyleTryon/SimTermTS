@@ -1,14 +1,13 @@
-import Program from "../structure/Program"
+import { ProgramClass } from "../types/Program"
 import IOStream from '../structure/OS/Process/IOStream'
 import { ErrorCode, ErrorCodeMap } from '../types/OS/Process/ErrorNo'
 
-export default class ProgramEcho extends Program {
+export default class ProgramEcho implements ProgramClass {
   alias = "echo"
   async execute(stream: IOStream): Promise<IOStream> {
     const outputArray = stream.stdin.split(" ")
     outputArray.shift()
     const output = outputArray.join(" ")
-
     return Promise.resolve({
       stdin: "",
       stdout: output,

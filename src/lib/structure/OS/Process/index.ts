@@ -2,7 +2,7 @@ import {ProcessData, ProcessRequest, ProcessState} from '../../../types/OS/Proce
 import {ErrorCodeMap, ErrorCode} from '../../../types/OS/Process/ErrorNo'
 import CommandHandler from "./CommandHandler"
 import IOStream from "./IOStream"
-import Program from  "../../Program"
+import { ProgramClass } from "../../../types/Program"
 
 export default class ProcessManager {
 
@@ -55,7 +55,7 @@ export default class ProcessManager {
     if (! this._commandHandler.commands.has(process.cmd)) {
       return new IOStream(ErrorCodeMap.get(1) as ErrorCode, "" , "Command does not exist")
     } else {
-      const command = this._commandHandler.commands.get(process.cmd) as Program
+      const command = this._commandHandler.commands.get(process.cmd) as ProgramClass
       return await command.execute(new IOStream(ErrorCodeMap.get(0) as ErrorCode, process.cmdline, ""))
     }
     
