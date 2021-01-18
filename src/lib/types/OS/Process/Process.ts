@@ -5,13 +5,15 @@ export enum ProcessState {
   Z = "TASK_ZOMBIE"
 }
 
-export interface ProcessRequest {
-  cmd: string,
-  cmdline: string
-  uid: number,
+export interface FileDescriptor {
+  stdin: string,
+  stdout: string | null,
+  stderr: string | null
 }
 
-export interface ProcessData extends ProcessRequest {
-  time: number,
-  state: ProcessState
+export type ExitCode = number
+export type PipeOut = Pick<FileDescriptor, "stdout" | "stderr">
+export interface ProcessOutput {
+  exitCode: ExitCode,
+  output: PipeOut
 }
