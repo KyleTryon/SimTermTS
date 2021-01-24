@@ -1,6 +1,6 @@
 import {ErrorCodeMap, ErrorCode} from '../../../types/OS/Process/ErrorNo'
 import CommandHandler from "./CommandHandler"
-import Program from "../../Program"
+import {Program} from "../../Program/Program"
 import Process from "./Process"
 import { CommandOptionType } from '../../../types/Command'
 

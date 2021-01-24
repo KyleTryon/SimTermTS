@@ -1,6 +1,6 @@
 import { ProcessState, FileDescriptor, ExitCode, ProcessOutput } from '../../../types/OS/Process/Process'
 import ProcessManager from './ProcessManager'
-import Program from "../../Program"
+import {Program, ProgramConstructor} from "../../Program/Program"
 export default class Process {
   private _procManager: ProcessManager
   private _pid: number
@@ -25,18 +25,22 @@ export default class Process {
     this.program = program
   }
   async exec(): Promise<ProcessOutput> {
-    const output =  await this.program.exec(this)
-    this._exitCode = output.exitCode
-    this._fd.stdout = output.output.stdout
-    this._fd.stderr = output.output.stderr
-    this.close()
-    return output
+    try {
+      const output =  await this.program.exec()
+      this._exitCode = output.exitCode
+      this._fd.stdout = output.output.stdout
+      this._fd.stderr = output.output.stderr
+      this.close()
+      return output
+    } catch (error) {
+      console.log("DEBUG: Process could not execute program")
+      throw new Error(error)
+    }
   }
 
   close(): void {
     this._procManager.proc.delete(this._pid)
   }
-
   fork(program: Program): Process {
     // generate new process pass stdout to
     // - Fill process with same contents, except the program, use the appropriate program.
@@ -45,11 +49,10 @@ export default class Process {
     this._procManager.proc.set(pid, process)
     return process
   }
-
   isProgram(inputCommand: string): boolean {
     return this._procManager.commandHander.commands.has(inputCommand)
   }
-  fetchProgram(inputCommand: string): Program | undefined {
+  fetchProgram(inputCommand: string): ProgramConstructor | undefined {
     return this._procManager.commandHander.commands.get(inputCommand)
   }
 }

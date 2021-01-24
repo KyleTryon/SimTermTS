@@ -1,19 +1,25 @@
-import Program from "../structure/Program"
+import {Program} from "../structure/Program/Program"
 import { ProcessOutput } from '../types/OS/Process/Process'
-import Process from '../structure/OS/Process/Process'
+import { ProgramOptions } from '../types/OS/Process/Program'
 
 export default class ProgramEcho extends Program {
   alias = "echo"
-  exec(process: Process): Promise<ProcessOutput> {
-    
-    return new Promise(() => {
-      return {
-        exitCode: 0,
-        output: {
-          stdout: process.fd.stdin,
-          stderr: null
+  constructor(options: ProgramOptions) {
+    super(options)
+  }
+  exec(): Promise<ProcessOutput> {
+    // this input string always begins with "echo ", followed by the string (for now until there are command options).
+    const output = this.stdin.substring(5, this.stdin.length)
+    return new Promise(resolve => {
+      resolve(
+        {
+          exitCode: 0,
+          output: {
+            stdout: output,
+            stderr: null
+          }
         }
-      }
+      )
     })
   }
 }
