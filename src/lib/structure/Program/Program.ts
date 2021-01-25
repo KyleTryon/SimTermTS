@@ -2,6 +2,7 @@ import { ProcessOutput } from '../../types/OS/Process/Process'
 import Process from '../OS/Process/Process'
 import ProcessManager from '../OS/Process/ProcessManager'
 import { ProgramOptions } from '../../types/OS/Process/Program'
+export type ProgramConstructor = new (options: ProgramOptions) => Program
 export abstract class Program {
   abstract alias: string
   stdin: string
@@ -18,5 +19,13 @@ export abstract class Program {
     return this.procManager.proc.get(this.pid) as Process
   }
   abstract exec(): Promise<ProcessOutput>
+  get parameters() {
+    const regexp = /(?:[^\s"]+|"[^"]*")+/g
+    const matches = this.stdin.match(regexp)
+    if (matches) {
+       return Array.from(matches)
+    } else {
+      return []
+    }
+  }
 }
-export type ProgramConstructor = new (options: ProgramOptions) => Program

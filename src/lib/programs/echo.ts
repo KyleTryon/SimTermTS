@@ -9,7 +9,9 @@ export default class ProgramEcho extends Program {
   }
   exec(): Promise<ProcessOutput> {
     // this input string always begins with "echo ", followed by the string (for now until there are command options).
-    const output = this.stdin.substring(5, this.stdin.length)
+    const parameterArray = this.parameters
+    parameterArray.shift()
+    const output = parameterArray.join(" ")
     return new Promise(resolve => {
       resolve(
         {

@@ -32,7 +32,7 @@ export default class Terminal extends Program {
       } else {
         console.log("Command not recognized")
       }
-      this._cli?.prompt()
+      ( this._cli as ReadLine.Interface).prompt()
     })
   }
 
