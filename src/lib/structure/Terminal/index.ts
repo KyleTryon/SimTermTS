@@ -1,34 +1,49 @@
 import * as ReadLine from 'readline'
-import ProcessManager from '../OS/Process'
+import {Program, ProgramConstructor} from "../Program/Program"
+import { ProcessOutput } from '../../types/OS/Process/Process'
+import ProcessManager from '../OS/Process/ProcessManager'
+import Process from '../OS/Process/Process'
+import { ProgramOptions } from '../../types/OS/Process/Program'
 
-export default class Terminal {
-  processManger: ProcessManager
+export default class Terminal extends Program {
+  alias = "sh"
+  private _cli?: ReadLine.Interface
 
-  constructor(processManager: ProcessManager) {
-    this.processManger = processManager
+  constructor(options: ProgramOptions ) {
+    super(options)
   }
 
-  cli: ReadLine.Interface = ReadLine.createInterface({
-    output: process.stdout,
-    input: process.stdin,
-    prompt: "user@machine:~/$ ",
-    terminal: false
-  })
-
-  init() {
-    this.cli.prompt()
-
-    this.cli.on('line', async (line) => {
-      const result = await this.processManger.schedule({
-        cmdline: line,
-        cmd: line.split(" ")[0],
-        uid: 1000
-      })
-      // Print the command output
-      console.log(result.stdout)
-
-      this.cli.prompt()
+  async init() {
+    this._cli = ReadLine.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+      prompt: `machine@${this.cwd} $ `, // Not sure how we'll access the CWD or other process info from the program yet.
+      terminal: false
+    })
+    this._cli.prompt()
+    this._cli.on('line', async (input) => {
+      let inputCommand = input.split(" ")[0]
+      if (this.proc.isProgram(inputCommand)) {
+        const programClass: ProgramConstructor = this.proc.fetchProgram(inputCommand) as ProgramConstructor
+        const program = new programClass({stdin: input, cwd: this.proc.cwd, pid: this.pid, procManager: this.procManager })
+        const forkedProcess = this.proc.fork(program)
+        let response = await forkedProcess.exec()
+        console.log(response.output.stdout)
+      } else {
+        console.log("Command not recognized")
+      }
+      ( this._cli as ReadLine.Interface).prompt()
     })
   }
 
+  async exec(): Promise<ProcessOutput> {
+    //placeholder
+    return {
+      exitCode: 0,
+      output: {
+        stderr: null,
+        stdout: null
+      }
+    }
+  }
 }
