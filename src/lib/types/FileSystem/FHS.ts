@@ -15,7 +15,8 @@ export const HFS: FSDirectoryJSON = {
         permissions: 777,
         uid: 100,
         gid: 100
-      }
+      },
+      children:[]
     },
     {
       type: FSNodeType.d,
@@ -24,7 +25,8 @@ export const HFS: FSDirectoryJSON = {
         permissions: 777,
         uid: 100,
         gid: 100
-      }
+      },
+      children:[]
     },
     {
       type: FSNodeType.d,
@@ -33,7 +35,8 @@ export const HFS: FSDirectoryJSON = {
         permissions: 777,
         uid: 100,
         gid: 100
-      }
+      },
+      children:[]
     },
     {
       type: FSNodeType.d,
@@ -42,7 +45,8 @@ export const HFS: FSDirectoryJSON = {
         permissions: 777,
         uid: 100,
         gid: 100
-      }
+      },
+      children:[]
     },
     {
       type: FSNodeType.d,
@@ -51,7 +55,58 @@ export const HFS: FSDirectoryJSON = {
         permissions: 777,
         uid: 100,
         gid: 100
-      }
+      },
+      children: [
+        {
+          type: FSNodeType.d,
+          options: {
+            name: "user",
+            permissions: 777,
+            uid: 100,
+            gid: 100
+          },
+          children:[
+            {
+              type: FSNodeType.d,
+              options: {
+                name: "documents",
+                permissions: 777,
+                uid: 100,
+                gid: 100
+              },
+              children:[]
+            },
+            {
+              type: FSNodeType.d,
+              options: {
+                name: "pictures",
+                permissions: 777,
+                uid: 100,
+                gid: 100
+              },
+              children:[]
+            },
+            {
+              type: FSNodeType.file,
+              options: {
+                name: "testfile",
+                permissions: 777,
+                uid: 100,
+                gid: 100
+              }
+            },
+            {
+              type: FSNodeType.file,
+              options: {
+                name: "testfile2",
+                permissions: 777,
+                uid: 100,
+                gid: 100
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       type: FSNodeType.d,
@@ -60,7 +115,8 @@ export const HFS: FSDirectoryJSON = {
         permissions: 777,
         uid: 100,
         gid: 100
-      }
+      },
+      children:[]
     },
     {
       type: FSNodeType.d,
@@ -69,7 +125,8 @@ export const HFS: FSDirectoryJSON = {
         permissions: 777,
         uid: 100,
         gid: 100
-      }
+      },
+      children:[]
     },
     {
       type: FSNodeType.d,
@@ -78,7 +135,8 @@ export const HFS: FSDirectoryJSON = {
         permissions: 777,
         uid: 100,
         gid: 100
-      }
+      },
+      children:[]
     },
     {
       type: FSNodeType.d,
@@ -87,7 +145,8 @@ export const HFS: FSDirectoryJSON = {
         permissions: 777,
         uid: 100,
         gid: 100
-      }
+      },
+      children:[]
     },
     {
       type: FSNodeType.d,
@@ -96,7 +155,8 @@ export const HFS: FSDirectoryJSON = {
         permissions: 777,
         uid: 100,
         gid: 100
-      }
+      },
+      children:[]
     },
     {
       type: FSNodeType.d,
@@ -105,7 +165,8 @@ export const HFS: FSDirectoryJSON = {
         permissions: 777,
         uid: 100,
         gid: 100
-      }
+      },
+      children:[]
     },
     {
       type: FSNodeType.d,
@@ -114,7 +175,8 @@ export const HFS: FSDirectoryJSON = {
         permissions: 777,
         uid: 100,
         gid: 100
-      }
+      },
+      children:[]
     },
     {
       type: FSNodeType.d,
@@ -123,7 +185,8 @@ export const HFS: FSDirectoryJSON = {
         permissions: 777,
         uid: 100,
         gid: 100
-      }
+      },
+      children:[]
     },
     {
       type: FSNodeType.d,
@@ -132,7 +195,8 @@ export const HFS: FSDirectoryJSON = {
         permissions: 777,
         uid: 100,
         gid: 100
-      }
+      },
+      children:[]
     },
   ]
 }

@@ -35,6 +35,7 @@ export interface FSFileOptions extends FSNodeOptions {
 export interface FSDirectoryJSON extends FSNodeJSON {
   type: FSNodeType.d,
   options: FSDirectoryOptions
+  children: FSNodeJSON[]
 }
 
 export interface FSDirectoryOptions extends FSNodeOptions {

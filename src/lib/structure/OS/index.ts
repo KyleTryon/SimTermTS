@@ -27,6 +27,7 @@ export default class OS {
 
   boot() {
     console.log("SYSTEM: Booting")
+    this.fileSystem.initialize()
     const terminalProgram = this.terminalProcess.program as Terminal
     terminalProgram.init()
   }

@@ -20,7 +20,7 @@ export abstract class Program {
   }
   abstract exec(): Promise<ProcessOutput>
   get parameters() {
-    const regexp = /(?:[^\s"]+|"[^"]*")+/g
+    const regexp = /[\w/]+|"(?:\\"|[^"])+"/g
     const matches = this.stdin.match(regexp)
     if (matches) {
        return Array.from(matches)

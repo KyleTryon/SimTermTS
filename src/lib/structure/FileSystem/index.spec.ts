@@ -1,38 +1,19 @@
-import { FSDirectoryJSON} from '../../types/FileSystem/FileSystem'
+import { FSDirectoryJSON } from '../../types/FileSystem/FileSystem'
+import FileSystem from './index'
 import FSDirectory from './FSDirectory'
 
-const directorySampleEmpty: FSDirectoryJSON = {
-  type: "directory",
-  options: {
-    name: "sample",
-    permissions: 777,
-    uid: 100,
-    gid: 100
-  }
-}
+const lfs = new FileSystem()
+lfs.initialize()
 
-const directorySampleParent: FSDirectoryJSON = {
-  type: "directory",
-  options: {
-    name: "parent",
-    permissions: 777,
-    uid: 100,
-    gid: 100
-  },
-  children: [directorySampleEmpty]
-}
-
-test('should return fsnode with type of directory', () => {
-  const node = new FSDirectory(directorySampleEmpty)
-  expect(node.type).toEqual("directory")
+test('return /bin directory object as JSON', () => {
+  const result = lfs.getChildDirectory(lfs._getFileSystemJSON(), "bin")
+  const target = { type: 'directory', "children":[], options: { name: 'bin', permissions: 777, uid: 100, gid: 100 } }
+  expect(result).toEqual(target)
 })
 
-test('should return an fsdirectory with a single child of type fsdirectory', () => {
-  const node = new FSDirectory(directorySampleParent)
-  expect(node.children?.length).toEqual(1)
-  if (node.children) {
-    const child = node.children[0]
-    expect(child.type).toEqual("directory")
-    expect(child.options.name).toEqual("sample")
-  }
+test('return /home/user directory object as JSON', () => {
+  const result = lfs.getDirectory("/home/user")
+  console.log(result)
+  const target = { type: 'directory', options: { name: 'user', permissions: 777, uid: 100, gid: 100 }, children: [] }
+  expect(result).toEqual(target)
 })
